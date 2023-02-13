@@ -1,4 +1,4 @@
-# todo app (todo-app)
+# Todo App (todo-app)
 
 A Quasar Project
 
