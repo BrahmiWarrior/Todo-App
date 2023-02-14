@@ -30,10 +30,11 @@ color="white"
       <hr />
       <br />
       <div class="fit row justify-evenly">
-        <div class="col-auto">
-          <div class="text-h3 text-weight-bold text-center">
+        <div class="col-auto q-py-xl">
+
+          <q-card class=" text-h4 text-center text-white bg-grey-10  " v-if="!showCreated" >
             CREATED:{{ createdCount }}
-          </div>
+          </q-card>
           <todo
             v-for="todo in createdTodos"
             :key="todo.id"
@@ -42,10 +43,10 @@ color="white"
           >
           </todo>
         </div>
-        <div class="col-auto">
-          <div class="text-h3 text-weight-bold text-center">
+        <div class="col-auto q-py-xl">
+          <q-card class=" text-h4 text-center text-white bg-grey-10 " v-if="!showProgress">
             INPROGRESS:{{ inprogressCount }}
-          </div>
+          </q-card>
           <todo
             v-for="todo in inProgressTodos"
             :key="todo.id"
@@ -54,10 +55,11 @@ color="white"
           >
           </todo>
         </div>
-        <div class="col-auto">
-          <div class="text-h3 text-weight-bold text-center">
+        <div class="col-auto q-py-xl">
+          <q-card class=" text-h4 text-center text-white bg-grey-10 "  v-if="!showCompleted">
             COMPLETED:{{ completedCount }}
-          </div>
+          </q-card>
+
           <todo
             v-for="todo in completedTodos"
             :key="todo.id"
@@ -74,6 +76,7 @@ color="white"
 <script>
 import { uid } from "quasar";
 
+
 import todo from "../components/Todo.vue";
 export default {
   components: { todo },
@@ -87,6 +90,7 @@ export default {
       selected: [],
       confirm: false,
       options: ["created", "inprogress", "completed"],
+
     };
   },
   methods: {
@@ -169,18 +173,46 @@ export default {
     isDisable() {
       return this.title.length && this.description.length == 0;
     },
+ showCreated() {
+      return this.createdCount === 0
+ },
+    showProgress() {
+      return this.inprogressCount === 0
+    },
+
+ showCompleted() {
+      return this.completedCount === 0
+    }
   },
 };
 </script>
 
 <style>
-.text-h3 {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 3.75;
+.text-h4 {
+
+  border-radius: 20px;
+  align-items: center;
+  justify-content: left;
+  backdrop-filter: blur(10px);
+  transition: 0.5s ease-in-out;
+
+
   font-weight: 300;
   line-height: 3.75rem;
   letter-spacing: -0.00833em;
+
+  margin-left: 10px;
+  color: white;
+  font-family: 'Poppins' sans-serif;
 }
+.text-h4:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.my-card{
+border-radius: 0%;
+}
+
 .q-page-container {
   background: linear-gradient(270deg, #ade0ff, #193D3C);
   -webkit-animation: waves 10s ease infinite;
@@ -205,11 +237,11 @@ export default {
     100%{background-position:0% 50%}
 }
 .q-pa-xs {
-  padding: 18px 0px;
+  padding: 40px 0px;
 }
 
 .q-card {
-  border-radius: 30px;
+
   transition: all 300ms;
 }
 .button1 {

@@ -191,7 +191,7 @@ export default {
       } else if (this.todoitem.status == "inprogress") {
         return "bg-orange";
       }
-      return "bg-red";
+      return "bg-teal-5";
     },
     todoInfo() {
       return this.todoitem;
