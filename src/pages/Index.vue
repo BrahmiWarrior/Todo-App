@@ -1,24 +1,12 @@
 <template>
   <q-page-container class="q-pa-md" padding>
     <q-page>
-      <div class="input-group" style="max-width: 300px">
-        <q-input
-          filled
-          v-model="title"
-          label="Title*"
-
-          color="white"
-        />
-       <q-input
-          filled
-          v-model="description"
-          label="Description * "
-
-color="white"
-        />
-        <div>
+      <div class="input-group" style="max-width: 400px">
+        <q-input class="q-pa-md"  :rules="[val => !!val || 'Field is required']"  v-model="title" label="Title" color="black" filled/>
+       <q-input class="q-pa-md"  :rules="[val => !!val || 'Field is required']" v-model="description" label="Description" color="black " filled />
+        <div class="q-pa-md">
           <q-btn
-            class="button1"
+            class="button1 "
             label="Submit"
             color="white"
             @click="addTodo"
@@ -30,11 +18,10 @@ color="white"
       <hr />
       <br />
       <div class="fit row justify-evenly">
-        <div class="col-auto q-py-xl">
-
-          <q-card class=" text-h4 text-center text-white bg-grey-10  " v-if="!showCreated" >
+        <div class="col-auto">
+          <div class="text-h3 text-weight-bold text-center">
             CREATED:{{ createdCount }}
-          </q-card>
+          </div>
           <todo
             v-for="todo in createdTodos"
             :key="todo.id"
@@ -43,10 +30,10 @@ color="white"
           >
           </todo>
         </div>
-        <div class="col-auto q-py-xl">
-          <q-card class=" text-h4 text-center text-white bg-grey-10 " v-if="!showProgress">
+        <div class="col-auto">
+          <div class="text-h3 text-weight-bold text-center">
             INPROGRESS:{{ inprogressCount }}
-          </q-card>
+          </div>
           <todo
             v-for="todo in inProgressTodos"
             :key="todo.id"
@@ -55,11 +42,10 @@ color="white"
           >
           </todo>
         </div>
-        <div class="col-auto q-py-xl">
-          <q-card class=" text-h4 text-center text-white bg-grey-10 "  v-if="!showCompleted">
+        <div class="col-auto">
+          <div class="text-h3 text-weight-bold text-center">
             COMPLETED:{{ completedCount }}
-          </q-card>
-
+          </div>
           <todo
             v-for="todo in completedTodos"
             :key="todo.id"
@@ -76,8 +62,8 @@ color="white"
 <script>
 import { uid } from "quasar";
 
-
 import todo from "../components/Todo.vue";
+import frontpage from "../css/frontpage.css"
 export default {
   components: { todo },
   name: "PageIndex",
@@ -100,8 +86,8 @@ export default {
         title: this.title,
         description: this.description,
         status: "created",
-        createdOn: new Date().toLocaleDateString(),
-        updatedOn: new Date().toLocaleDateString(),
+        createdOn: new Date().toLocaleString(),
+        updatedOn: new Date().toLocaleString(),
       };
       //local storage get and set
       var todos = localStorage.getItem("todos") || "[]";
@@ -112,6 +98,7 @@ export default {
       localStorage.setItem("todos", todos);
       this.title = "";
       this.description = "";
+console.log(this.createdOn)
     },
 
     editTodo(index, index2, index3, index4, index5) {
@@ -188,31 +175,13 @@ export default {
 </script>
 
 <style>
-.text-h4 {
-
-  border-radius: 20px;
-  align-items: center;
-  justify-content: left;
-  backdrop-filter: blur(10px);
-  transition: 0.5s ease-in-out;
-
-
+.text-h3 {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 3.75;
   font-weight: 300;
   line-height: 3.75rem;
   letter-spacing: -0.00833em;
-
-  margin-left: 10px;
-  color: white;
-  font-family: 'Poppins' sans-serif;
 }
-.text-h4:hover {
-  cursor: pointer;
-  transform: scale(1.05);
-}
-.my-card{
-border-radius: 0%;
-}
-
 .q-page-container {
   background: linear-gradient(270deg, #ade0ff, #193D3C);
   -webkit-animation: waves 10s ease infinite;
@@ -237,11 +206,11 @@ border-radius: 0%;
     100%{background-position:0% 50%}
 }
 .q-pa-xs {
-  padding: 40px 0px;
+  padding: 18px 0px;
 }
 
 .q-card {
-
+  border-radius: 30px;
   transition: all 300ms;
 }
 .button1 {
