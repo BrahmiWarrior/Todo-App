@@ -1,13 +1,12 @@
 <template>
   <div class="q-pa-xs">
     <q-card :class="statusColor">
-
       <q-card-section>
         <q-card-section class="q-pt-xs">
           <div class="row">
             <div class="col">
               <div class="text-h5 q-mt-sm q-mb-xs text-weight-medium">
-                Title
+                Title :
               </div>
             </div>
             <div class="col text-h6 q-mt-sm q-mb-xs">
@@ -18,7 +17,7 @@
           <div class="row">
             <div class="col">
               <div class="text-h5 q-mt-sm q-mb-xs text-weight-medium">
-                Description
+                Description :
               </div>
             </div>
             <div class="col text-h6 q-mt-sm q-mb-xs">
@@ -29,7 +28,7 @@
           <div class="row">
             <div class="col">
               <div class="text-h5 q-mt-sm q-mb-xs text-weight-medium">
-                Status
+                Status :
               </div>
             </div>
             <div class="col text-h6 q-mt-sm q-mb-xs">
@@ -38,39 +37,53 @@
           </div>
 
           <q-separator />
-
           <div class="q-ml-md q-pt-lg" style="text-align: center">
-            <q-icon name="today" class="white q-ml-xs" style="font-size: 2em" />
+                <div>{{ todoitem.createdOn }}</div>
           </div>
-          <q-dialog v-model="deleteTodoDialog" persistent>
-               <q-card square class="shadow-24 text-center">
-          <q-card-section class="bg-red-7">
-            <h2 class="text-h5 text-white ">Would You like to delete</h2>
+          <q-dialog v-model="deleteTodoDialog"  persistent>
+            <q-card class="card text-center">
+              <q-card-section class="card-top-left">
+                <q-list>
+                  <q-item>
+                    <q-item-section class="left-part">
+                     <div class="text1">Title</div>
+                      <q-item-label class="name"
+                        > {{ todoitem.title }}</q-item-label
+                      >
 
-          </q-card-section>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+                <q-list>
+                  <q-item>
+                    <q-item-section>
+ <div class="text2">Description</div>
+                      <q-item-label class="description"
 
-          <q-card-section >
-   <q-list >
-        <q-item >
-          <q-item-section >
-            <q-item-label class="text-center text-h5">Title:{{ todoitem.title }}</q-item-label>
-          </q-item-section>
-        </q-item>
-</q-list>
- <q-list>
-        <q-item >
-          <q-item-section>
-            <q-item-label class="text-center text-h5">Description:{{ todoitem.description }}</q-item-label>
-          </q-item-section>
-        </q-item>
-</q-list>
+                        >{{ todoitem.description }}</q-item-label
+                      >
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card-section  >
 
-              </q-card-section>
+  <div class="q-pa-md checkbox1">
+    <q-checkbox dark   v-model="checkbox"  />I understand that deleting is permanent and can't be undone</div>
 
-              <q-card-actions align="right">
-                <q-btn class="q-pl-xl" flat label="Cancel" color="primary" v-close-popup />
+
+              <q-card-actions align="right" class="card-bottom-part">
+                <q-btn
+                  v-model="checkbox"
+                   @click="checkBoxDefault"
+                  class="q-pl-xl"
+                  flat
+                  label="Cancel"
+                  color="primary"
+                  v-close-popup
+                />
                 <q-btn
                   flat
+                :disabled="!Disable"
                   label="Confirm delete"
                   color="red"
                   @click="removeTodo()"
@@ -85,8 +98,8 @@
             @before-show="beforeShow"
             persistent
           >
-            <q-card  style="width: 350px">
-              <q-card-section >
+            <q-card style="width: 350px">
+              <q-card-section>
                 <br />
                 <q-input
                   filled
@@ -140,7 +153,9 @@
 </template>
 
 <script>
+import todo from "../css/todo.css"
 export default {
+
   name: "ComponentName",
   props: {
     todoitem: {
@@ -155,6 +170,7 @@ export default {
       options: ["created", "inprogress", "completed"],
       title: "",
       description: "",
+checkbox:false
     };
   },
   methods: {
@@ -182,6 +198,12 @@ export default {
       localStorage.setItem("todos", JSON.stringify(todos));
       this.$emit("refreshData");
     },
+    checkBoxDefault() {
+      return this.checkbox=false
+
+    },
+
+
   },
 
   computed: {
@@ -191,37 +213,21 @@ export default {
       } else if (this.todoitem.status == "inprogress") {
         return "bg-orange";
       }
-      return "bg-red";
+      return "bg-teal-5";
     },
     todoInfo() {
       return this.todoitem;
     },
+    Disable() {
+return  this.checkbox===true
+    }
+
   },
 };
 </script>
 
-
-
-
 <style>
 
-  @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
-
-
-.text-h5{
-font-family: 'Kanit', sans-serif;
-font-size: 3.75;
-font-weight: 300;
-line-height: 3.75rem;
-letter-spacing: -0.00833em;
-}
-.text-h6{
-font-size: 3.75;
-font-weight: 400;
-line-height: 2.75rem;
-letter-spacing: -0.00833em;
-}
 
 
 
-</style>
