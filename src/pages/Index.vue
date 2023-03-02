@@ -92,7 +92,7 @@ export default {
 
   data() {
     return {
-      dummylist: [],
+
       todos: [],
       title: "",
       description: "",
