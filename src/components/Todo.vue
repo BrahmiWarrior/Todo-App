@@ -59,7 +59,6 @@
                     <q-item-section>
  <div class="text2">Description</div>
                       <q-item-label class="description"
-
                         >{{ todoitem.description }}</q-item-label
                       >
                     </q-item-section>
@@ -69,7 +68,6 @@
 
   <div class="q-pa-md checkbox1">
     <q-checkbox dark   v-model="checkbox"  />I understand that deleting is permanent and can't be undone</div>
-
 
               <q-card-actions align="right" class="card-bottom-part">
                 <q-btn
